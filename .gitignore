@@ -1,0 +1,52 @@
+# C/C++
+*.d
+*.o
+*.ko
+*.obj
+*.elf
+*.ilk
+*.map
+*.exp
+*.gch
+*.pch
+*.lib
+*.a
+*.la
+*.lo
+*.dll
+*.so
+*.so.*
+*.dylib
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+*.gc*
+
+# Editor/IDE
+.idea/
+.vscode/
+
+# CMake
+cmake-build-*/
+CMakeLists.txt
+
+# OS files
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+[Dd]esktop.ini
+._*
+
+# executables
+main
+/test-*

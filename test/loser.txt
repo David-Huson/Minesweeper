@@ -1,0 +1,2 @@
+test/four-by-four.in
+c 3 3

@@ -1,0 +1,84 @@
+{
+	"tests": [
+	{
+		"name": "Run Cell tests",
+		"setup": "",
+		"run": "timeout 60 make test-1-cell",
+		"input": "",
+		"output": "All tests passed (11 assertions in 2 test cases)",
+		"comparison": "included",
+		"timeout": 1,
+		"points": 15
+	},
+	{
+		"name": "Run Board init tests",
+		"setup": "",
+		"run": "timeout 60 make test-2-board",
+		"input": "",
+		"output": "All tests passed (3 assertions in 1 test case)",
+		"comparison": "included",
+		"timeout": 1,
+		"points": 5
+	},
+	{
+		"name": "Run more Board tests",
+		"setup": "",
+		"run": "timeout 60 make test-3-gameplay",
+		"input": "",
+		"output": "All tests passed (14 assertions in 1 test case)",
+		"comparison": "included",
+		"timeout": 1,
+		"points": 10
+	},
+	{
+		"name": "Run text menu app tests",
+		"setup": "",
+		"run": "timeout 60 make test-4-app",
+		"input": "",
+		"output": "All tests passed (35 assertions in 2 test cases)",
+		"comparison": "included",
+		"timeout": 1,
+		"points": 20
+	},
+	{
+		"name": "Memory leak check",
+		"setup": "(valgrind --version || (sudo apt-get update -y && sudo apt-get install -y valgrind)) && make test-2-board",
+		"run": "timeout 60 valgrind --error-exitcode=1 --leak-check=full ./test-2-board",
+		"input": "",
+		"output": "",
+		"comparison": "included",
+		"timeout": 1,
+		"points": 10
+	},
+	{
+		"name": "Memory leak check (UI)",
+		"setup": "(valgrind --version || (sudo apt-get update -y && sudo apt-get install -y valgrind)) && make test-4-app",
+		"run": "timeout 60 valgrind --error-exitcode=1 --leak-check=full ./test-4-app",
+		"input": "",
+		"output": "",
+		"comparison": "included",
+		"timeout": 1,
+		"points": 10
+	},
+	{
+		"name": "Verify working main (winner)",
+		"setup": "make main",
+		"run": "timeout 10 ./main < test/winner.txt",
+		"input": "",
+		"output": "3 \\| 2 \\|   \\| 3 (.|\n)*Game Over",
+		"comparison": "regex",
+		"timeout": 1,
+		"points": 10
+	},
+	{
+		"name": "Verify working main (loser)",
+		"setup": "make main",
+		"run": "timeout 10 ./main < test/loser.txt",
+		"input": "",
+		"output": "3 \\|   \\| [^ ]{1} \\|   \\| [^ ]{1} \\|(.|\n)*Game Over",
+		"comparison": "regex",
+		"timeout": 1,
+		"points": 10
+	}
+	]
+}
