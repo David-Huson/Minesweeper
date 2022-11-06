@@ -65,7 +65,7 @@
 		"setup": "make main",
 		"run": "timeout 10 ./main < test/winner.txt",
 		"input": "",
-		"output": "3 \\| 2 \\|   \\| 3 (.|\n)*Game Over",
+		"output": "3 \\| 2 \\|   \\| 3 (.|\n)*You Win",
 		"comparison": "regex",
 		"timeout": 1,
 		"points": 10
