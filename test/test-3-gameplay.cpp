@@ -7,7 +7,7 @@
 TEST_CASE("Board Game Play") {
   Board b;
   CHECK(b.load("test/four-by-four.in"));  // successful file load
-
+  // b.load("test/four-by-four.in");
   SECTION("Invalid move to click out-of-boundary cells") {
     CHECK(!b.click(-1, 0));
     CHECK(!b.click(4, 0));

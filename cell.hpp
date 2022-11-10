@@ -11,6 +11,7 @@ class Cell {
     bool hasMine();
     Cell();
     Cell(bool mine);
+    void setMine();
     int getAdjacentMineCount();
     void toggleFlag();
     void setAdjacentMineCount(int mineCount);

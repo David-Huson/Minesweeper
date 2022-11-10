@@ -5,6 +5,10 @@
   const std::string Cell::NO_ADJACENT_MINES = "\u25A2";
   const std::string Cell::UNKNOWN = " ";
 
+
+Cell::Cell(): isMine(false), isFlagged(false), isCleared(false), adjacentMineCount(0) {
+  status = UNKNOWN;
+}
 /**
  * @brief Construct a new Cell given a boolean parameter to specify if it has a mine
  */
@@ -12,26 +16,20 @@ Cell::Cell(bool mine): isMine(mine), isFlagged(false), isCleared(false), adjacen
   status = UNKNOWN;
 }
 
+void Cell::setMine(){
+  isMine = true;
+}
+
 bool Cell::click(){
+  
+  if(!isCleared && !isFlagged){    // if the cell has not been clicked
 
-  if(isFlagged) {
-    return false;
-  }
-
-  if(status == UNKNOWN){    // status will be UNKNOWN if the cell has not been clicked
     isCleared = true;
-
-    if(isMine){
-      status = MINE;
-    }
-    if(!isFlagged && !isMine && adjacentMineCount == 0) {
-      status = NO_ADJACENT_MINES;
-    }
-
-    return true;  // return false if the cell has already been clicked (status not UNKNOWN)
+    return true;
   }
 
-  return false;
+  return false;  //  if the cell has already been clicked 
+
 }
 
 bool Cell::hasMine(){
@@ -43,14 +41,24 @@ int Cell::getAdjacentMineCount(){
 
 void Cell::setAdjacentMineCount(int mineCount){
   adjacentMineCount = mineCount;
-  status = std::to_string(adjacentMineCount);
 }
 
 void Cell::toggleFlag(){
   isFlagged = !isFlagged;
-  status = (isFlagged) ? FLAG: UNKNOWN; // if true status = FLAG, else status = UNKNOWN
 }
 
 std::string Cell::str(){
-  return status;
+  if(isCleared){
+    if(isMine)
+      return MINE;
+    else if(getAdjacentMineCount() == 0)
+      return NO_ADJACENT_MINES;
+    else
+      return std::to_string(getAdjacentMineCount());
+    
+  }
+  else if(isFlagged)
+    return FLAG;
+  else 
+    return UNKNOWN;
 }
