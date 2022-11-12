@@ -115,7 +115,6 @@
         }
 
         if(cell.hasMine()) {    // make sure we dont click a mine accidentally and stop clicking when we reach a cell with adjacent mines
-          cell.click();
           return true;
         }
 
@@ -184,9 +183,13 @@
   void Board::revealMines() {
     for(int row = 0; row < rows; row++){
       for(int col = 0; col < cols; col++){
-        if(field[row][col].hasMine()){
+        if(isMine(row, col)){
           field[row][col].click();
         }
       }
     }
+  }
+
+  bool Board::isMine(int row, int col) {
+    return field[row][col].hasMine();
   }

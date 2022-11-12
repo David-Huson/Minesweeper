@@ -13,13 +13,27 @@ void TextMenuApp::run(){
   char action;
   int row = 0;
   int col = 0;
+  std::string file = "";
 
   while(!gameOver){
-    std::cout << getPrompt() << std::endl;
+    while (!validFile){
+      while(true){
+        std::cout << getPrompt();
+        getline(std::cin, file);
+        if(!file.empty())
+          break;
+      }
+      std::cout << std::endl;
+      load(file);
+    }
 
+    std::cout << getPrompt();
     std::cin >> action >> row >> col;
+    std::cout << std::endl;
     move(action, row, col);
   }
+  std::cout << getPrompt() << std::endl;
+
 }
 
 std::string TextMenuApp::getPrompt() {
@@ -56,12 +70,14 @@ std::string TextMenuApp::getPrompt() {
 bool TextMenuApp::move(char moveChar, int row, int col){
   
   if(checkMoveValidity(moveChar, row, col)){
-
     if (std::tolower(moveChar) == 'c') {
-      bool ret = b.click(row, col);
+      bool valid = b.click(row, col);
+      if(b.isMine(row, col)){
+        gameOver = true;
+        winner = false;
+      }
       checkForWin();
-      checkForLose();
-      return ret;
+      return valid;
     }
     else {
       return b.flag(row, col);
@@ -90,12 +106,6 @@ void TextMenuApp::checkForWin(){
     gameOver = true;
     winner = true;
   }
-}
-
-void TextMenuApp::checkForLose(){
-  size_t found = b.str().find("*");
-  if (found != std::string::npos)
-    gameOver = true;
 }
 
 bool TextMenuApp::load(std::string filename){

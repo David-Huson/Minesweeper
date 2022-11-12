@@ -14,6 +14,7 @@ class Board {
     bool inbounds(int row,int col);
     bool checkWin();
     void revealMines();
+    bool isMine(int row, int col);
   private:
     Cell** field;
     int cols;
