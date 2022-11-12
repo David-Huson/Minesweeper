@@ -1,12 +1,13 @@
 #include "board.hpp"
 #include <fstream>
 #include <string>
-#include <iostream> // REMOVE BEFORE COMMIT!
   const std::string hBorder = "    +---+---+---+---+";
   const std::string vBorder = " |";
   Board::Board(){
     rows = 0;
     cols = 0;
+    numMines = 0;
+    numCleared = 0;
   }
 
   Board::~Board() {
@@ -21,7 +22,6 @@
     std::string fieldString = "";
     bool isFirstRow = true;
 
-      std::cout << "reading file" << std::endl;
     if(!file.fail()){
       char c;
       while(file.get(c)){
@@ -77,8 +77,8 @@
         col = 0;
       }
       else if (c == '*') {
-        // std::cout << "Adding mine at row, col: " <<  row << ',' << col % cols  << std::endl; 
         field[row][col++].setMine();
+        numMines++;
       } else {
         col++;
       }
@@ -114,10 +114,16 @@
             return false;
         }
 
+        if(cell.hasMine()) {    // make sure we dont click a mine accidentally and stop clicking when we reach a cell with adjacent mines
+          cell.click();
+          return true;
+        }
+
         cell.click();   // click to reveal the cell status
- 
-        if(cellStatus == Cell::MINE || cell.getAdjacentMineCount() != 0) {    // make sure we dont click a mine accidentally and stop clicking when we reach a cell with adjacent mines
-            return false;
+
+        if(cell.getAdjacentMineCount() != 0){
+          numCleared++;
+          return true;
         }
 
         /*
@@ -127,8 +133,8 @@
                   / | \
                 SW  S  SE 
         */
-
         // try clicking all surrounding cells (N, S, E, W, NE, NW, SE, SW)
+        numCleared++;
         click(row - 1, col - 1);  // click cell to the north west
         click(row, col - 1);      // click cell to the west
         click(row + 1, col - 1);  // click cell to the south west
@@ -164,5 +170,23 @@
     else {
       field[row][col].toggleFlag();
       return true;
+    }
+  }
+
+  bool Board::checkWin() {
+    int numCells = rows * cols;
+    if(numMines ==  numCells - numCleared && numCleared != 0)
+      return true;
+    
+    return false;
+  }
+
+  void Board::revealMines() {
+    for(int row = 0; row < rows; row++){
+      for(int col = 0; col < cols; col++){
+        if(field[row][col].hasMine()){
+          field[row][col].click();
+        }
+      }
     }
   }
