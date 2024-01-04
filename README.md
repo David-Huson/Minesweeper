@@ -1,7 +1,7 @@
 # Project 2 - Minesweeper
 
 > [!Important]
-> The points badge and GitHub Actions will not be accurate since it has not ran in a long time
+> The points badge and GitHub Actions will not be accurate due to an error with the configuration provided by the instructor
 
 [![Points badge](../../blob/badges/.github/badges/points.svg)](../../actions)
 
